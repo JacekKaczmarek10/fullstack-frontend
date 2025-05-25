@@ -1,54 +1,111 @@
-# React + TypeScript + Vite
+# CHAT APP - REACT + TYPESCRIPT + VITE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## TECHNICAL STACK
 
-Currently, two official plugins are available:
+- React 18
+- TypeScript 5
+- Vite 5
+- Axios 1.6
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## REQUIREMENTS
 
-## Expanding the ESLint configuration
+- Node.js v18+
+- npm 9+
+- Running backend API (default: `http://localhost:8080`)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## INSTALLATION
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+### Clone repo:
+```bash
+git clone [repo-url] && cd [repo-name]
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+### Install dependencies:
+```bash
+npm install
 ```
+
+### Start dev server:
+```bash
+npm run dev
+```
+
+## PROJECT STRUCTURE
+
+```
+src/
+│
+├── api.ts           # All API calls
+├── types.ts         # Type definitions
+├── main.tsx         # App entry
+└── components/      # React components
+    ├── Message.tsx  # Message component
+    └── ...          # Other components
+```
+
+## KEY FILES
+
+### `api.ts`
+```ts
+import axios from 'axios';
+import { MessageDto, NewMessageDto } from './types.js';
+
+const API_BASE_URL = 'http://localhost:8080/v1/api/messages';
+
+export const getMessages = async (): Promise<MessageDto[]> => {
+  const response = await axios.get(API_BASE_URL);
+  return response.data;
+};
+
+export const addMessage = async (newMessage: NewMessageDto): Promise<MessageDto> => {
+  const response = await axios.post(API_BASE_URL, newMessage);
+  return response.data;
+};
+```
+
+### `types.ts`
+```ts
+export interface MessageDto {
+  id: number;
+  content: string;
+}
+
+export interface NewMessageDto {
+  content: string;
+}
+```
+
+## IMPORTANT NOTES
+
+- Always use `.js` extension in imports for TypeScript files:
+```ts
+import { MessageDto } from './types.js'; // ✅ Correct
+import { MessageDto } from './types';    // ❌ Will break
+```
+
+- API base URL can be changed in `api.ts`
+- Development server runs on `http://localhost:5173` by default
+
+## BUILD & DEPLOY
+
+### Production build:
+```bash
+npm run build
+```
+
+### Serve production build locally:
+```bash
+npm run preview
+```
+
+## TROUBLESHOOTING
+
+If getting `"Module not found"` errors:
+
+- Verify all imports have correct extensions (`.js`)
+- Restart Vite dev server
+- Check terminal for TypeScript errors
+
+## LICENSE
+
+MIT License
