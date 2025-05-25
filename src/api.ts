@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MessageDto, NewMessageDto } from './types';
+import { MessageDto, NewMessageDto } from './types.js';
 
 const API_BASE_URL = 'http://localhost:8080/v1/api/messages';
 
