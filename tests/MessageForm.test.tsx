@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { MessageForm } from '../components/MessageForm';
+import { MessageForm } from '../src/components/MessageForm';
 import { vi } from 'vitest';
-import * as api from '../api';
+import * as api from '../src/api';
 
-vi.mock('../api');
+vi.mock('../src/api');
 
-const mockedAddMessage = api.addMessage as jest.MockedFunction<typeof api.addMessage>;
+const mockedAddMessage = api.addMessage as vi.MockedFn<typeof api.addMessage>;
 
 describe('MessageForm', () => {
   beforeEach(() => {
@@ -32,7 +32,11 @@ describe('MessageForm', () => {
 
   it('submits sanitized message and calls onNewMessage', async () => {
     const onNewMessage = vi.fn();
-    mockedAddMessage.mockResolvedValue(undefined);
+    mockedAddMessage.mockResolvedValue({
+      id: 1,
+      content: 'Hello',
+      sender: 'TestUser',
+    });
 
     render(<MessageForm onNewMessage={onNewMessage} />);
 

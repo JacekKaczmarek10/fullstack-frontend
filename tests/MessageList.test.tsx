@@ -1,12 +1,12 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
-import { MessageList } from '../components/MessageList';
+import { MessageList } from '../src/components/MessageList';
 import { vi } from 'vitest';
-import * as api from '../api';
+import * as api from '../src/api';
 
-vi.mock('../api');
+vi.mock('../src/api');
 
-const mockedGetMessages = api.getMessages as vi.MockedFunction<typeof api.getMessages>;
+const mockedGetMessages = api.getMessages as vi.MockedFn<typeof api.getMessages>;
 
 describe('MessageList', () => {
   beforeEach(() => {
