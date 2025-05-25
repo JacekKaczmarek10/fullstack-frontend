@@ -6,4 +6,9 @@ export default defineConfig({
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx'],
   },
+  test: {
+    environment: 'jsdom',
+    globals: true,
+    setupFiles: './src/setupTests.ts',
+  }
 });

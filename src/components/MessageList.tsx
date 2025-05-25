@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { getMessages } from '../api';
 import { MessageDto } from '../types';
+import { MessageForm } from './MessageForm';
 
 export const MessageList: React.FC = () => {
   const [messages, setMessages] = useState<MessageDto[]>([]);
@@ -21,14 +22,24 @@ export const MessageList: React.FC = () => {
   return (
       <div>
         <h2>Messages</h2>
-        <ul>
+        <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+          <thead>
+          <tr style={{ borderBottom: '2px solid #7a83ff' }}>
+            <th style={{ textAlign: 'center', padding: '8px' }}>ID</th>
+            <th style={{ textAlign: 'center', padding: '8px' }}>Content</th>
+          </tr>
+          </thead>
+          <tbody>
           {messages.map((msg) => (
-              <li key={msg.id}>{msg.content}</li>
+              <tr key={msg.id} style={{ borderBottom: '1px solid #ccc' }}>
+                <td style={{ padding: '8px' }}>{msg.id}</td>
+                <td style={{ padding: '8px' }}>{msg.content}</td>
+              </tr>
           ))}
-        </ul>
+          </tbody>
+        </table>
+
         <MessageForm onNewMessage={loadMessages} />
       </div>
   );
 };
-
-import { MessageForm } from './MessageForm';
