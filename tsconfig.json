@@ -7,5 +7,7 @@
     "strict": true,
     "jsx": "react-jsx"
   },
+  "types": ["node", "vitest/globals", "jest"],
+  "moduleResolution": "node16",
   "include": ["src/**/*.ts", "src/**/*.tsx"]
 }
