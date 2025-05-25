@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { addMessage } from '../api';
+import DOMPurify from 'dompurify';
 
 interface Props {
   onNewMessage: () => void;
@@ -13,7 +14,8 @@ export const MessageForm: React.FC<Props> = ({ onNewMessage }) => {
     if (!content.trim()) return;
 
     try {
-      await addMessage({ content: content.trim() });
+      const sanitizedContent = DOMPurify.sanitize(content.trim());
+      await addMessage({ content: sanitizedContent });
       setContent('');
       onNewMessage();
     } catch (err) {
