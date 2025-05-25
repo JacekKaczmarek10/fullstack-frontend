@@ -6,7 +6,8 @@
     "esModuleInterop": true,
     "strict": true,
     "jsx": "react-jsx",
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
   "types": ["node", "vitest/globals", "jest"],
   "moduleResolution": "node16",
